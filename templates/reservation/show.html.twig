@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block body %}
+<div class="container my-5" style="background: linear-gradient(to right, #fff1e0, #ffe5b4); padding: 30px; border-radius: 12px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Card principale -->
+            <div class="card shadow-lg border-0" style="background-color: #fff1e0cc; border-radius: 12px;">
+
+                <!-- Header rouge -->
+                <div class="card-header" style="background-color: #b22222; color: white; text-align: center; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <h2 class="mb-0">Détails de la Réservation 📖</h2>
+                </div>
+
+                <!-- Corps de la carte -->
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Id</th>
+                                <td>{{ reservation.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date Reservation</th>
+                                <td>{{ reservation.dateReservation ? reservation.dateReservation|date('d/m/Y H:i') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Statut</th>
+                                <td>{{ reservation.statut }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer avec boutons -->
+                <div class="card-footer d-flex flex-column gap-2">
+                    <a href="{{ path('app_reservation_index') }}" class="btn btn-secondary d-block mx-auto" style="color: white;">
+                        <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                    </a>
+
+
+                    {{ include('reservation/_delete_form.html.twig') }}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

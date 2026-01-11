@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Emprunts {% endblock %}
+
+{% block body %}
+    <h1>{% if is_granted('ROLE_ADMIN') %}Tous les Emprunts {% else %}Mes Emprunts{% endif %}</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                {% if is_granted('ROLE_ADMIN') %}<th>Utilisateur</th>{% endif %}
+                <th>Livre</th>
+                <th>Date Emprunt</th>
+                <th>Retour Prévu</th>
+                <th>Retour Effectif</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for emprunt in emprunts %}
+            <tr class="{% if emprunt.statut == 'en retard' %}table-danger{% elseif emprunt.statut == 'retourné' %}table-success{% endif %}">
+                {% if is_granted('ROLE_ADMIN') %}<td>{{ emprunt.utilisateur.email }}</td>{% endif %}
+                <td>{{ emprunt.livre.titre }}</td>
+                <td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('d/m/Y') : '' }}</td>
+                <td>{{ emprunt.dateRetourPrevue ? emprunt.dateRetourPrevue|date('d/m/Y') : '' }}</td>
+                <td>{{ emprunt.dateRetourEffective ? emprunt.dateRetourEffective|date('d/m/Y') : '-' }}</td>
+                <td>{{ emprunt.statut|capitalize }}</td>
+                <td>
+                    <a href="{{ path('app_emprunt_show', {'id': emprunt.id}) }}" class="btn btn-sm btn-info text-white">Voir</a>
+                    {% if is_granted('ROLE_ADMIN')  %}
+                        <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}" class="btn btn-sm btn-warning text-white" style="margin-top:3px;">Modifier</a>
+                        <a href="{{ path('app_emprunt_delete', {'id': emprunt.id}) }}" class="btn btn-sm btn-danger text-white" style="margin-top:3px;">Supprimer</a>
+                    {% endif %} 
+                    {% if is_granted('ROLE_ADMIN') and emprunt.statut != 'retourné' %}
+                     <form method="post" action="{{ path('app_emprunt_return', {'id': emprunt.id}) }}" style="display:inline-block" onsubmit="return confirm('Confirmer le retour ?');">
+                             <button class="btn btn-sm btn-danger" style="margin-top:4px;">Retourner</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun emprunt trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

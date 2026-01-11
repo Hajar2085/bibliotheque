@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lien de réinitialisation envoyé{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Card principale -->
+            <div class="card shadow-lg border-0" style="background: linear-gradient(to right, #fff4e6, #ffe5b4); border-radius: 15px;">
+                
+                <!-- Header -->
+                <div class="card-header text-center" style="background-color: #ff8c42; color: white; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                    <h2 class="mb-0">Lien de réinitialisation envoyé ✉️</h2>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body">
+                    <p>
+                        Si un compte correspondant à votre e-mail existe, un lien pour réinitialiser votre mot de passe vient d’être envoyé.
+                        Ce lien expirera dans <strong>{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}</strong>.
+                    </p>
+                    <p>
+                        Si vous ne recevez pas l’e-mail, vérifiez votre dossier spam ou <a href="{{ path('app_forgot_password_request') }}">réessayez</a>.
+                    </p>
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer text-center" style="background-color: #ffe5b4; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                    <a href="{{ path('app_login') }}" class="text-decoration-none" style="color: #ff8c42;">Retour à la connexion</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

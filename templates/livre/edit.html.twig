@@ -1,0 +1,55 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Modifier Livre{% endblock %}
+
+{% block body %}
+    <h1>Modifier Livre ✍️</h1>
+
+    {{ include('livre/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('app_livre_index') }}" style="text-decoration: none; margin-right: 10px;">back to list</a>
+
+    {{ include('livre/_delete_form.html.twig') }}
+{% endblock %} #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Livre{% endblock %}
+
+{% block body %}
+<div class="container my-5" style="background: linear-gradient(to right, #f0f4f8, #d9e2ec); padding: 30px; border-radius: 12px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Card principale avec fond doux -->
+            <div class="card shadow-lg border-0" style="background-color: #ffffffcc; border-radius: 12px;">
+                <div class="card-header bg-primary text-white text-center" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <h2 class="mb-0">Modifier Livre ✍️</h2>
+                </div>
+
+                <div class="card-body">
+                    <!-- Formulaire (inchangé) -->
+                    {{ include('livre/_form.html.twig', {'button_label': 'Modifier'}) }}
+                </div>
+
+                <!-- Footer vertical -->
+                <div class="card-footer d-flex flex-column gap-2">
+                    <!-- Bouton retour -->
+                    <a href="{{ path('app_livre_index') }}" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                    </a>
+
+                    <!-- Bouton suppression si admin -->
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% if livre.emprunts|length == 0 %}
+                            {{ include('livre/_delete_form.html.twig') }}
+                        {% else %}
+                            <span class="text-center text-muted">Livre emprunté, suppression impossible</span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

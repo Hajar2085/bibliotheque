@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+    <h1>Tableau de bord</h1>
+    <p>Bienvenue {{ app.user.prenom }} !</p>
+    
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Livres</h5>
+                    <p class="card-text">Parcourir la bibliothèque.</p>
+                    <a href="{{ path('app_livre_index') }}" class="btn btn-primary">Voir les livres</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Mes Emprunts</h5>
+                    <p class="card-text">Gérer vos emprunts en cours.</p>
+                    <a href="{{ path('app_emprunt_index') }}" class="btn btn-warning">Mes Emprunts</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Mes Réservations</h5>
+                    <p class="card-text">Suivre vos réservations.</p>
+                    <a href="{{ path('app_reservation_index') }}" class="btn btn-info">Mes Réservations</a>
+                </div>
+            </div>
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+        <div class="col">
+            <div class="card h-100 border-danger">
+                <div class="card-body">
+                    <h5 class="card-title">Administration</h5>
+                    <p class="card-text">Gérer les utilisateurs et le contenu.</p>
+                    <a href="{{ path('app_user_index') }}" class="btn btn-danger">Gérer Users</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

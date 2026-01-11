@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Réservations{% endblock %}
+
+{% block body %}
+    <h1>{% if is_granted('ROLE_ADMIN') %}Toutes les Réservations{% else %}Mes Réservations{% endif %}</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                {% if is_granted('ROLE_ADMIN') %}<th>Utilisateur</th>{% endif %}
+                <th>Livre</th>
+                <th>Date Réservation</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                {% if is_granted('ROLE_ADMIN') %}<td>{{ reservation.utilisateur.email }}</td>{% endif %}
+                <td>{{ reservation.livre.titre }}</td>
+                <td>{{ reservation.dateReservation ? reservation.dateReservation|date('d/m/Y') : '' }}</td>
+                <td>
+                    <span class="badge {% if reservation.statut == 'active' %}bg-primary{% else %}bg-secondary{% endif %}">
+                        {{ reservation.statut|capitalize }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}" class="btn btn-sm btn-info text-white">Voir</a>
+                    <a href="{{ path('app_reservation_delete', {'id': reservation.id}) }}" class="btn btn-sm btn-danger text-white">Supprimer</a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune réservation trouvée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

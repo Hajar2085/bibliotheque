@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livre{% endblock %}
+
+{% block body %}
+    <h1>Livre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ livre.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ livre.titre }}</td>
+            </tr>
+            <tr>
+                <th>Auteur</th>
+                <td>{{ livre.auteur }}</td>
+            </tr>
+            <tr>
+                <th>Isbn</th>
+                <td>{{ livre.isbn }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ livre.description }}</td>
+            </tr>
+            <tr>
+                <th>NombreExemplaires</th>
+                <td>{{ livre.nombreExemplaires }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ livre.createdAt ? livre.createdAt|date('d/m/Y H:i') : '' }}</td>
+            </tr>
+            {% if livre.imageFilename %}
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ asset('images/livres/' ~ livre.imageFilename) }}" alt="{{ livre.titre }}" style="max-height:200px;"/></td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-sm btn-secondary" href="{{ path('app_livre_index') }}" style="text-decoration: none; margin-right: 10px;">back to list</a>
+    <a class="btn btn-sm btn-warning" href="{{ path('app_livre_edit', {'id': livre.id}) }}" style="text-decoration: none;">edit</a>
+    <a class="btn btn-sm btn-danger" href="{{ path('app_livre_delete', {'id': livre.id}) }}" style="text-decoration: none; margin-right: 10px;">Supprimer</a>
+
+{% if is_granted('ROLE_ADMIN') %}
+    {% if livre.emprunts|length == 0 %}
+        {{ include('livre/_delete_form.html.twig') }}
+    {% else %}
+        <p class="text-muted">Ce livre est emprunté, suppression impossible.</p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

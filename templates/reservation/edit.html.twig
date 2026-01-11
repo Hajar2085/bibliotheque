@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Réservation{% endblock %}
+
+{% block body %}
+<div class="container my-5" style="background: linear-gradient(to right, #fff1e0, #ffe5b4); padding: 30px; border-radius: 12px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Card principale avec fond marron clair -->
+            <div class="card shadow-lg border-0" style="background-color: #fff1e0cc; border-radius: 12px;">
+                
+                <!-- Header rouge -->
+                <div class="card-header" style="background-color: #b22222; color: white; text-align: center; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <h2 class="mb-0">Modifier Réservation 📖</h2>
+                </div>
+
+                <!-- Corps de la carte -->
+                <div class="card-body">
+                    {{ include('reservation/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                </div>
+
+                <!-- Footer avec boutons -->
+                <div class="card-footer d-flex flex-column gap-2">
+                    <!-- Bouton retour -->
+                    <a href="{{ path('app_reservation_index') }}" class="btn" style="background-color: #b22222; color: white; width: 100%;">
+                        <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                    </a>
+
+                    <!-- Bouton supprimer -->
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {{ include('reservation/_delete_form.html.twig') }}
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

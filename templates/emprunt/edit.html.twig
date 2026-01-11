@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Emprunt{% endblock %}
+
+{% block body %}
+<div class="container my-5" style="background: linear-gradient(to right, #fff4e6, #ffe5b4); padding: 30px; border-radius: 12px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Card principale -->
+            <div class="card shadow-lg border-0" style="background-color: #fff1e0cc; border-radius: 12px;">
+                <div class="card-header" style="background-color: #ff8c42; color: white; text-align: center; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <h2 class="mb-0">Modifier Emprunt ✍️</h2>
+                </div>
+
+                <div class="card-body">
+                    <!-- Formulaire -->
+                    {{ include('emprunt/_form.html.twig', {'button_label': 'Modifier'}) }}
+                </div>
+
+                <div class="card-footer d-flex flex-column gap-2 align-items-center">
+                    <!-- Bouton retour centré -->
+                    <a href="{{ path('app_emprunt_index') }}" class="btn" style="background-color: #d2a679; color: white; width: 200px;">
+                        <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                    </a>
+
+                    <!-- Bouton suppression si admin -->
+                    {{ include('emprunt/_delete_form.html.twig') }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

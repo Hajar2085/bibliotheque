@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bibliothèque 📖 - Liste des Livres{% endblock %}
+
+{% block body %}
+<div class="container-fluid p-0" style="
+        background-image: url('{{ asset('images/library-wall.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        padding: 60px 15px;
+        min-height: 100vh;
+  ">
+
+    <!-- TITRE CENTRAL STYLE BIBLIO -->
+    <div class="text-center mb-5">
+        <h1 style="font-size: 3rem; color: #4b2e83; text-shadow: 2px 2px 8px rgba(0,0,0,0.4);">
+            Bibliothèque Numérique 📚
+        </h1>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_livre_new') }}" class="btn btn-lg" style="
+                background-color: #4b2e83;
+                color: white;
+                font-weight: bold;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                transition: 0.3s all;
+            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                Ajouter un Livre
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for livre in livres %}
+            <div class="col">
+                <div class="card h-100 shadow" style="
+                        background: rgba(255, 255, 255, 0.88);
+                        border-radius: 12px;
+                        transition: transform 0.3s, box-shadow 0.3s;
+                    "
+                    onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.22)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.15)';"
+                >
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: #4b2e83; font-weight: 600;">{{ livre.titre }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ livre.auteur }}</h6>
+                        <p class="card-text">{{ livre.description|slice(0, 90) ~ '...' }}</p>
+
+                        {% if livre.imageFilename %}
+                            <img src="{{ asset('images/livres/' ~ livre.imageFilename) }}" 
+                                 alt="{{ livre.titre }}"
+                                 class="img-fluid mb-3"
+                                 style="width: 300px; height:70%; border-radius: 8px; object-fit: cover;">
+                        {% endif %}
+
+                        <p><strong>Stock :</strong> 
+                            {% if livre.nombreExemplaires > 0 %}
+                                <span class="badge bg-success">{{ livre.nombreExemplaires }} disponibles</span>
+                            {% else %}
+                                <span class="badge bg-danger">Indisponible</span>
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="card-footer d-flex flex-wrap justify-content-between gap-2">
+                        <a href="{{ path('app_livre_show', {'id': livre.id}) }}" class="btn btn-sm btn-primary text-white">
+                            Détails
+                        </a>
+
+                        {% if is_granted('ROLE_USER') %}
+                            {% if livre.nombreExemplaires > 0 %}
+                                <a href="{{ path('app_emprunt_new', {'livre_id': livre.id}) }}" class="btn btn-sm btn-success">
+                                    Emprunter
+                                </a>
+                            {% else %}
+                                <a href="{{ path('app_reservation_new', {'livre_id': livre.id}) }}" class="btn btn-sm btn-warning">
+                                    Réserver
+                                </a>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('app_livre_edit', {'id': livre.id}) }}" class="btn btn-sm btn-secondary">
+                                Modifier
+                            </a>
+                            {% if livre.emprunts|length == 0 %}
+                                {{ include('livre/_delete_form.html.twig') }}
+                            {% else %}
+                                <span class="badge bg-secondary text-dark">Emprunté</span>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center" style="color: #4b2e83; font-size: 1.2rem;">Aucun livre trouvé.</p>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

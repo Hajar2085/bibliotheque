@@ -1,0 +1,45 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}New Livre{% endblock %}
+
+{% block body %}
+    <h1>Create new Livre</h1>
+
+    {{ include('livre/_form.html.twig') }}
+    <br>
+    <a href="{{ path('app_livre_index') }}" style="text-decoration: none; margin-right: 10px;" class="btn btn-secondary">back to list</a>
+{% endblock %} #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}New Livre{% endblock %}
+
+{% block body %}
+<div class="container my-5" style="background: linear-gradient(to right, #f0f4f8, #d9e2ec); padding: 30px; border-radius: 12px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Card principale avec fond doux -->
+            <div class="card shadow-lg border-0" style="background-color: #ffffffcc; border-radius: 12px;">
+                <div class="card-header bg-success text-white text-center" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                    <h2 class="mb-0">Créer un Nouveau Livre 📚</h2>
+                </div>
+
+                <div class="card-body">
+                    <!-- Formulaire (inchangé) -->
+                    {{ include('livre/_form.html.twig') }}
+                </div>
+
+                <!-- Footer vertical -->
+                <div class="card-footer d-flex flex-column gap-2">
+                    <!-- Bouton retour -->
+                    <a href="{{ path('app_livre_index') }}" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
