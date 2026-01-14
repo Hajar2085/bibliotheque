@@ -6,8 +6,7 @@
 2.  **Clone**: Clonez ce dépôt.
 3.  **Dépendances**: Exécutez `composer install`.
 4.  **Base de données**:
-    *   Le projet est configuré pour utiliser SQLite par défaut pour faciliter le test (`.env`).
-    *   Si vous souhaitez utiliser MySQL/PostgreSQL, modifiez `DATABASE_URL` dans le fichier `.env`.
+    *   Le projet est configuré pour utiliser Mysql par défaut pour faciliter le test (`.env`).
 5.  **Mise en place**:
     ```bash
     php bin/console doctrine:database:create
@@ -24,12 +23,12 @@
 
 | Rôle | Email | Mot de passe |
 | :--- | :--- | :--- |
-| **Admin** | `admin@library.com` | `admin123` |
+| **Admin** | `hajar@gmail.com` | `0000` |
 | **User** | `user@library.com` | `user123` |
 
 ## Fonctionnalités
 
-*   **Authentification**: Inscription, Connexion, Déconnexion.
+*   **Authentification**: Inscription, Reset password, Connexion, Déconnexion.
 *   **Livres**: Catalogue visible par tous. CRUD complet pour l'Admin.
 *   **Emprunts**:
     *   Un utilisateur peut emprunter un livre s'il est en stock.
