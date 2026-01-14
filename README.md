@@ -1,4 +1,7 @@
 # Symfony Library Management System
+🔗 Liens Importants
+APPLICATION DÉPLOYÉE (Live Demo) : CLIQUEZ ICI POUR VOIR LE SITE
+Repository GitHub : Lien vers ce repo
 
 ## Installation
 
@@ -23,7 +26,7 @@
 
 | Rôle | Email | Mot de passe |
 | :--- | :--- | :--- |
-| **Admin** | `hajar@gmail.com` | `0000` |
+| **Admin** | `hajar@gmail.com` | `000000` |
 | **User** | `user@library.com` | `user123` |
 
 ## Fonctionnalités
