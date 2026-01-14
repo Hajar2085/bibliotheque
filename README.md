@@ -1,5 +1,6 @@
 # Symfony Library Management System
-🔗 Liens Importants
+🔗 Liens Importants:
+
 APPLICATION DÉPLOYÉE (Live Demo) : CLIQUEZ ICI POUR VOIR LE SITE;
 
 Repository GitHub : [Lien vers ce repo](https://github.com/Hajar2085/bibliotheque)
