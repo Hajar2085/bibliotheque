@@ -44,12 +44,17 @@
                     <a href="{{ path('app_emprunt_index') }}" class="btn  d-block mx-auto" style="background-color: #d2a679; color: white; width: 200px;">
                         <i class="bi bi-arrow-left-circle"></i> Retour à la liste
                     </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}"
+                        class="btn d-block mx-auto"
+                        style="background-color: #d37439; color: white; width: 200px;">
+                            <i class="bi bi-pencil-square"></i> Modifier
+                        </a>
 
-                    <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}" class="btn d-block mx-auto" style="background-color: #ff8c42; color: white; width: 200px;">
-                        <i class="bi bi-pencil-square"></i> Modifier
-                    </a>
+                        {{ include('emprunt/_delete_form.html.twig') }}
+                    {% endif %}
 
-                    {{ include('emprunt/_delete_form.html.twig') }}
+                    
                 </div>
             </div>
 

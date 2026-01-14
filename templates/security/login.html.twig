@@ -3,53 +3,191 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body p-4">
-                    <h1 class="h3 mb-3 fw-normal text-center">Connexion</h1>
-                    
-                    <form method="post">
-                        {% if error %}
-                            <div class="alert alert-danger">
-                                {{ error.messageKey|trans(error.messageData, 'security') }}
-                            </div>
-                        {% endif %}
+<style>
+    body {
+        background: linear-gradient(135deg, #fde2e4, #f8f9fa);
+        min-height: 100vh;
+        animation: fadeInBg 1.2s ease;
+    }
 
-                        {% if app.user %}
-                            <div class="mb-3">
-                                Vous êtes déjà connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
-                            </div>
-                        {% endif %}
+    @keyframes fadeInBg {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
-                        <div class="mb-3">
-                            <label for="inputEmail" class="form-label">Email</label>
-                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus placeholder="votre@email.com">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="inputPassword" class="form-label">Mot de passe</label>
-                            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-                        </div>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+    }
 
-                        {# <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"> #}
+    .login-card {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 18px;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        border: 1px solid #f1f1f1;
+        animation: slideUp 0.9s ease;
+    }
 
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-lg btn-primary" type="submit">
-                                Se connecter
-                            </button>
-                        </div>
-                        <div>
-                        <a href="{{ path('app_forgot_password_request') }}" style="text-decoration: none; hover: underline;color: #578bb6; ;">Mot de passe oublié ?</a>
-                        </div>
-                        <div class="mt-3 text-center">
-                            <a href="{{ path('app_register') }}">Pas encore de compte ? M'inscrire</a>
-                        </div>
-                    </form>
+    @keyframes slideUp {
+        from {
+            transform: translateY(40px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .login-card h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #d63384;
+        font-weight: 600;
+        animation: fadeIn 1.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .login-card label {
+        font-weight: 500;
+        color: #6c757d;
+        transition: color 0.3s ease;
+    }
+
+    .login-card input {
+        border-radius: 25px;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+    }
+
+    .login-card input:focus {
+        border-color: #d63384;
+        background-color: #ffffff;
+        box-shadow: 0 0 6px rgba(214, 51, 132, 0.25);
+    }
+
+    .login-card input:focus + label {
+        color: #d63384;
+    }
+
+    .btn-login {
+        width: 100%;
+        border-radius: 25px;
+        padding: 12px;
+        font-weight: 600;
+        background: #d63384;
+        border: none;
+        color: white;
+        margin-top: 15px;
+        transition: all 0.35s ease;
+    }
+
+    .btn-login:hover {
+        background: #c22574;
+        box-shadow: 0 10px 25px rgba(214, 51, 132, 0.35);
+        transform: translateY(-3px);
+    }
+
+    .btn-login:active {
+        transform: scale(0.97);
+    }
+
+    .login-links {
+        text-align: center;
+        margin-top: 18px;
+        animation: fadeIn 1.6s ease;
+    }
+
+    .login-links a {
+        color: #6c757d;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+
+    .login-links a:hover {
+        color: #d63384;
+        text-decoration: underline;
+    }
+
+    .alert {
+        animation: shake 0.5s ease;
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+        <h1>Connexion</h1>
+
+        <form method="post">
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
                 </div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="alert alert-secondary text-center">
+                    Connecté en tant que
+                    <strong>{{ app.user.userIdentifier }}</strong> —
+                    <a href="{{ path('app_logout') }}">Déconnexion</a>
+                </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label for="inputEmail">Email</label>
+                <input type="email"
+                       value="{{ last_username }}"
+                       name="email"
+                       id="inputEmail"
+                       class="form-control"
+                       required
+                       autofocus
+                       placeholder="votre@email.com">
             </div>
-        </div>
+
+            <div class="mb-3">
+                <label for="inputPassword">Mot de passe</label>
+                <input type="password"
+                       name="password"
+                       id="inputPassword"
+                       class="form-control"
+                       required>
+            </div>
+
+            <button class="btn btn-login" type="submit">
+                Se connecter
+            </button>
+
+            <div class="login-links">
+                <a href="{{ path('app_forgot_password_request') }}">
+                    Mot de passe oublié ?
+                </a>
+                <br>
+                <a href="{{ path('app_register') }}">
+                    Pas encore de compte ? S’inscrire
+                </a>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}

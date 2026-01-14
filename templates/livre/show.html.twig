@@ -44,9 +44,22 @@
         </tbody>
     </table>
 
-    <a class="btn btn-sm btn-secondary" href="{{ path('app_livre_index') }}" style="text-decoration: none; margin-right: 10px;">back to list</a>
-    <a class="btn btn-sm btn-warning" href="{{ path('app_livre_edit', {'id': livre.id}) }}" style="text-decoration: none;">edit</a>
-    <a class="btn btn-sm btn-danger" href="{{ path('app_livre_delete', {'id': livre.id}) }}" style="text-decoration: none; margin-right: 10px;">Supprimer</a>
+    <a class="btn btn-sm btn-secondary" href="{{ path('app_livre_index') }}" style="text-decoration: none; margin-right: 10px;">Retourner a la liste</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-sm btn-warning"
+        href="{{ path('app_livre_edit', {'id': livre.id}) }}"
+        style="text-decoration: none;">
+            Modifier
+        </a>
+
+        {% if livre.emprunts|length == 0 %}
+            {{ include('livre/_delete_form.html.twig') }}
+        {% else %}
+            <p class="text-muted mt-2">
+                Ce livre est emprunté, suppression impossible.
+            </p>
+        {% endif %}
+    {% endif %}
 
 {% if is_granted('ROLE_ADMIN') %}
     {% if livre.emprunts|length == 0 %}

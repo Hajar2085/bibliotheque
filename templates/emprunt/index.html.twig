@@ -34,7 +34,7 @@
                     {% endif %} 
                     {% if is_granted('ROLE_ADMIN') and emprunt.statut != 'retourné' %}
                      <form method="post" action="{{ path('app_emprunt_return', {'id': emprunt.id}) }}" style="display:inline-block" onsubmit="return confirm('Confirmer le retour ?');">
-                             <button class="btn btn-sm btn-danger" style="margin-top:4px;">Retourner</button>
+                             <button class="btn btn-sm btn-success" style="margin-top:4px;">Retourner</button>
                         </form>
                     {% endif %}
                 </td>

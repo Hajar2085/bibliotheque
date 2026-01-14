@@ -3,16 +3,87 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Inscription</h1>
+<style>
+    body {
+        background: linear-gradient(135deg, #ffecd2, #fcb69f);
+        min-height: 100vh;
+    }
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Mot de passe'
-        }) }}
+    .register-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+    }
 
-        <button type="submit" class="btn btn-primary">S'inscrire</button>
-    {{ form_end(registrationForm) }}
+    .register-card {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .register-card h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #ff7a18;
+        font-weight: bold;
+    }
+
+    .register-card label {
+        font-weight: 600;
+        color: #555;
+    }
+
+    .register-card input {
+        border-radius: 30px;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        transition: all 0.3s ease;
+    }
+
+    .register-card input:focus {
+        border-color: #ff7a18;
+        box-shadow: 0 0 8px rgba(255, 122, 24, 0.3);
+    }
+
+    .btn-register {
+        width: 100%;
+        border-radius: 30px;
+        padding: 12px;
+        font-weight: bold;
+        background: linear-gradient(135deg, #ff7a18, #ffb347);
+        border: none;
+        color: white;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255, 122, 24, 0.4);
+        color: white;
+    }
+</style>
+
+<div class="register-container">
+    <div class="register-card">
+        <h1>Créer un compte</h1>
+
+        {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.nom) }}
+            {{ form_row(registrationForm.prenom) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Mot de passe'
+            }) }}
+
+            <button type="submit" class="btn btn-register">
+                S'inscrire
+            </button>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
 {% endblock %}
