@@ -1,6 +1,7 @@
 # Symfony Library Management System
 🔗 Liens Importants
-APPLICATION DÉPLOYÉE (Live Demo) : CLIQUEZ ICI POUR VOIR LE SITE
+APPLICATION DÉPLOYÉE (Live Demo) : CLIQUEZ ICI POUR VOIR LE SITE;
+
 Repository GitHub : Lien vers ce repo
 
 ## Installation
